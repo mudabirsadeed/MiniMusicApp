@@ -1,5 +1,5 @@
 
-
+import javax.swing.event.*;
 import javax.sound.midi.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -13,18 +13,29 @@ public class MiniMusicApp{
 
 	JFrame theFrame;
 	JPanel mainPanel;
+	JList incomingList;
+	JTextField userMessage;
+	ArrayList<JCheckBox> checkboxList;
+	int nextNum;
+	Vector<String> listVector = new Vector<String>();
+	HashMap<String, boolean[]> otherSeqsMap = new HashMap<String, boolean[]>();
+	
+	JPanel background;
+	JLabel status;
+	
 	Sequencer sequencer;
 	Sequence sequence;
 	Track track;
-	ArrayList<JCheckBox> checkboxList;
-	JPanel background;
-	JLabel status;
+	
+	Socket sock;
+	ObjectOutputStream out;
+	ObjectInputStream in;
 	
 	JTextArea incoming;
 	JTextField outgoing;
 	BufferedReader reader;
 	PrintWriter writer;
-	Socket sock;
+	
 	String username;
 	JTextField usernameField;
 	JFrame usernameFrame;
@@ -191,7 +202,7 @@ public class MiniMusicApp{
 	public void setUpNetworking(){ 
 		try{
 			sock = new Socket("127.0.0.1", 5000);
-			InputStreamReader streamReader = new InputStreamReader(sock.getInputStream());
+			out= new ObjectstreamReader = new InputStreamReader(sock.getInputStream());
 			reader = new BufferedReader(streamReader);
 			writer = new PrintWriter(sock.getOutputStream());
 			System.out.println("networking established");
